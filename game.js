@@ -107,7 +107,6 @@ function updateGameArea() {
                 break;
         }
         treeToDraw.draw(treeToDraw.x + i*20, treeToDraw.y);
-        console.log("### tree screen pos : " + treeToDraw.x + i*20)
     }
     
     houseGamePiece.draw(houseGamePiece.x, houseGamePiece.y);
@@ -132,7 +131,7 @@ function updateGameArea() {
         stopAtStationCounter = 0;
     }
     
-    if (trainPosX - stationPosX > 30 && trainPosX - stationPosX < 50 /*&& messageCounter < 1*/ && stopAtStationCounter < 10) {
+    if (trainPosX - stationPosX > 30 && trainPosX - stationPosX < 50 && stopAtStationCounter < 10) {
         message = "Station missed!";
         messageCounter = 1;
     }
@@ -162,10 +161,8 @@ function displayMessage() {
 }
 
 function pickTrees() {
-    console.log("### size : " + treeIdArray.length)
     for (var i = 0 ; i < 4 ; i++) {
         treeIdArray[i] = Math.floor(Math.random()*4);
-        console.log("### tree " + treeIdArray[i])
     } 
 }
 
@@ -188,7 +185,6 @@ function handleBrakeOnMouseUp() {
 }
 
 function updateTrain() {
-    // control
     trainPosX += speed*timeinterval_s;
     
     if (isBrakeButtonPressed == true) {
@@ -198,12 +194,12 @@ function updateTrain() {
     } else {
         speed -= 0.1*accel*timeinterval_s;        
     }
-     // limit speed
+     
     if (speed >= 70.0) {
         speed = 70.0;
     }
     if (speed <= 0) {
-            speed = 0;
+        speed = 0;
     }
     console.log("speed: " + speed)
     
@@ -221,9 +217,7 @@ function getPosOnScreen(posX) {
 }
 
 function updateTree() {
-    // update gfx
     treePosX_local = treePosX - trainPosX;
-    //console.log("tree pos local: " + treePosX_local);
     treeGamePiece.x = treePosX_local*m_to_px;
     tree2GamePiece.x = treeGamePiece.x;
     tree3GamePiece.x = treeGamePiece.x;
@@ -234,10 +228,6 @@ function updateTree() {
         
         numOfTrees = Math.random()*3 + 1;
         pickTrees();
-        for (var i = 0 ; i < numOfTrees ;i++) {
-            console.log("### tree id " + treeIdArray[i]);
-        }
-        console.log("num of trees = " + numOfTrees);
     }
 }
 
@@ -252,18 +242,12 @@ function updateStation() {
 
 function updateLand() { 
     landPosX_local = (landPosX - trainPosX);
-    // heightsPosX_local = (heightsPosX - trainPosX);
     
     landGamePiece.x = landPosX_local*m_to_px*secPlanePerspFactor;
-    // heightsGamePiece.x = heightsPosX_local*m_to_px*secPlanePerspFactor;
     
     if (landPosX_local < -1370.0) {
         landPosX = trainPosX + 1000.0;
     }
-    
-    // if (heightsPosX_local < -1000.0) {
-        // heightsPosX = landPosX + 1000.0;
-    // }   
 }
 
 function updateHouse() {
@@ -274,6 +258,3 @@ function updateHouse() {
         housePosX = trainPosX + Math.random()*50.0 + 200.0;
     }
 }
-
-
-
